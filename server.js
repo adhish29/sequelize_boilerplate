@@ -20,6 +20,7 @@ sequelize.sync().then(() => {
 });
 
 app.get("/ping", async (_, res) => {
+  logger.info("Ping");
   res.send("pong");
 });
 
