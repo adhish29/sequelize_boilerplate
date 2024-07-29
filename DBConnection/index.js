@@ -10,7 +10,19 @@ class Database {
         config.database,
         config.username,
         config.password,
-        config
+        // config
+        {
+          host: config.host,
+          dialect: config.dialect,
+          retry: {
+            maxAttempts: 5, // maximum number of attempts
+            match: [/Deadlock/, /Timeout/, /Connection lost/], // retry on specific errors
+            backoffBase: 1000, // initial backoff time in milliseconds
+            backoffExponent: 1.5, // exponent for calculating next backoff time
+            backoffMax: 30000, // maximum backoff time in milliseconds
+            retryDelay: 1000, // initial retry delay in milliseconds
+          },
+        }
       );
       Database.instance = this;
     }
